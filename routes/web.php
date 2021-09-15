@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PDFController;
 
 
 
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.register');
+    return view('home');
 });
 Route::get('/about', function () {
     return view('about');
@@ -31,6 +31,9 @@ Route::get('/help', function () {
 Route::get('/contacts', function () {
     return view('contacts');
 });
+Route::get('/ticket/create', function () {
+    return view('ticket/create');
+});
 
 
 
@@ -39,15 +42,14 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('register');
-//Route::post('/information', [App\Http\Controllers\Information::class, 'save']);
-Route::get('/buy', [App\Http\Controllers\BuyController::class, 'index'])->name('buy');
 
-Route::post('purchase', [App\Http\Controllers\BuyController::class, 'purchase'])->name('purchase');
+Route::post('store', [App\Http\Controllers\TicketController::class, 'store'])->name('store');
 
 
 
 
 Route::resource('tickets', App\Http\Controllers\TicketController::class);
+Route::post('buy', [App\Http\Controllers\OrderController::class, 'buy'])->name('buy');
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +57,13 @@ Route::resource('tickets', App\Http\Controllers\TicketController::class);
 |--------------------------------------------------------------------------
 |
 */
+Route::prefix('admin')->name('admin.')->group(function () {
 
+    Route::get('/',[App\Http\Controllers\Admin\AdminController::class,'index'])->name('admin');
+    Route::resource('/lakes',App\Http\Controllers\Admin\LakesController::class);
+    Route::resource('/ticketAdmin',App\Http\Controllers\Admin\TicketAdminController::class);
+    Route::resource('orders',App\Http\Controllers\Admin\OrdersController::class );
+
+
+});
 

@@ -1,9 +1,13 @@
 <template>
     <div>
-        <h1>
-            Kaip isigyti zvejo bilieta
-        </h1>
-        <h1>Vue component</h1>
+        <div class="container">
+            <div class="card">
+                <h1>
+                    Kaip įsigyti žvejo bilietą?
+                </h1>
+                <p class="mt-3"> Paprasčiausiai užpyldykite šia <a href="http://127.0.0.1:8000/tickets/create"> forma</a> , apmokėkite bilieto kainą, ir nuskanave QR koda turėsite savo bilieta.</p>
+            </div>
+        </div>
 
     </div>
 </template>

@@ -33,4 +33,16 @@ class Ticket extends Model
         'start_date' => ['required', 'date', 'after:yesterday'],
         'end_date' => ['required', 'date', 'after_or_equal:start_date'],
     ];
+
+    public function order()
+    {
+        return $this -> hasOne(Order::class)->first();
+    }
+
+    public function lakes()
+    {
+        $lakes= json_decode($this->lake);
+        $lakes = Lake::query()->whereIn('id', $lakes)->get()->pluck('name')->toArray();
+        return implode(', ', $lakes);
+    }
 }

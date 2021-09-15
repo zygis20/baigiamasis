@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lake;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Ticket;
@@ -25,13 +26,15 @@ class TicketController extends Controller
 
     /**
      * @param int $id
-     * @return JsonResponse
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|JsonResponse
      */
-    public function show(int $id): JsonResponse
+    public function show(int $id)
     {
         $ticket = Ticket ::query() -> where('id', $id) -> first();
         if ($ticket) {
-            return new JsonResponse($ticket);
+            return view('ticket.show', compact('ticket'));
+
+
         } else {
             return new JsonResponse('Ticket not found', 404);
         }
@@ -87,7 +90,8 @@ class TicketController extends Controller
             $data['created_at'] = date("Y-m-d H:i:s");
             Ticket ::query() -> insert($data);
 
-            return new JsonResponse('Ticket created');
+
+            return new JsonResponse('Bilietas uzsakytas, Generuojamas mokejimas');
         }
     }
 
@@ -107,3 +111,4 @@ class TicketController extends Controller
         dd('ticket redagavimas');
     }
 }
+
